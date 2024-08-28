@@ -18,7 +18,7 @@ export default function Navbar() {
   }
 
   function logout() {
-    localStorage.removeItem("user token");
+    localStorage.removeItem("userToken");
     setIsLogin(null);
     navigate("/login");
   }
