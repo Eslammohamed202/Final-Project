@@ -1,20 +1,17 @@
 import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useState } from "react";
 
+export let auth = createContext(null);
 
-export let auth = createContext (null) 
+export default function AuthContextProvider({ children }) {
+  const [isLogin, setIsLogin] = useState(null);
 
-export default function AuthContextProvider ({children}) {
+  useEffect(() => {
+    if (localStorage.getItem("userToken"))
+      setIsLogin(jwtDecode(localStorage.getItem("userToken")));
+  }, []);
 
-
-    const [isLogin, setIsLogin] = useState(null)
-
-    useEffect (() => {
-        if (localStorage.getItem('user token'))
-            setIsLogin(jwtDecode(localStorage.getItem('user token')))
-    } , [])
-
-    return <auth.Provider value={{isLogin , setIsLogin}}>
-        {children}
-    </auth.Provider>
+  return (
+    <auth.Provider value={{ isLogin, setIsLogin }}>{children}</auth.Provider>
+  );
 }
